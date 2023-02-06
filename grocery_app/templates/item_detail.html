@@ -14,15 +14,57 @@
 
 <h2>Edit Item</h2>
 
-<form>
+<form method="POST">
+    {{ form.csrf_token }}
     <fieldset>
         <legend>Please enter your information:</legend>
 
+        <!-- Remove the next paragraph and use the `form` object passed in
+                    from the route to render a form. -->
+        {{ form.name.label }}
+        {{ form.name }}
+        <!-- Show form errors -->
+        <ul>
+            {% for error in form.name.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        
+        {{ form.price.label }}
+        {{ form.price }}
+        <!-- Show form errors -->
+        <ul>
+            {% for error in form.price.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        
+        {{ form.category.label }}
+        {{ form.category }}
+        <!-- Show form errors -->
+        <ul>
+            {% for error in form.category.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
 
+        {{ form.photo_url.label }}
+        {{ form.photo_url }}
+        <!-- Show form errors -->
+        <ul>
+            {% for error in form.photo_url.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
 
-        <!-- TODO: Remove the next paragraph and use the `form` object passed in 
-            from the route to render a form. -->
-        <p><em>Form fields go here!</em></p>
+        {{ form.store.label }}
+        {{ form.store }}
+        <!-- Show form errors -->
+        <ul>
+            {% for error in form.store.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
 
         <input type="submit" value="Submit">
     </fieldset>

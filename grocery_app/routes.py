@@ -94,13 +94,23 @@ def store_detail(store_id):
 @main.route("/item/<item_id>", methods=["GET", "POST"])
 def item_detail(item_id):
     item = GroceryItem.query.get(item_id)
-    # TODO: Create a GroceryItemForm and pass in `obj=item`
+    # Create a GroceryItemForm and pass in `obj=item`
+    form = GroceryItemForm(obj=item)
 
-    # TODO: If form was submitted and was valid:
+    # If form was submitted and was valid:
     # - update the GroceryItem object and save it to the database,
     # - flash a success message, and
     # - redirect the user to the item detail page.
+    if form.validate_on_submit():
+        item.name = form.name.data
+        item.price = form.price.data
+        item.category = form.category.data
+        item.photo_url = form.photo_url.data
+        item.store = form.store.data
+        db.session.add(item)
+        db.session.commit()
 
-    # TODO: Send the form to the template and use it to render the form fields
-    item = GroceryItem.query.get(item_id)
-    return render_template("item_detail.html", item=item)
+        flash("Item updated successfully!")
+        return redirect(url_for("main.item_detail", item_id=item.id))
+    # Send the form to the template and use it to render the form fields
+    return render_template("item_detail.html", item=item, form=form)
