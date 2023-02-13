@@ -2,6 +2,18 @@
 {% block content %}
 
 <h1>Item - {{ item.name }}</h1>
+<form method="post" action="/add_to_shopping_list/{{ item.id }}">
+    <input type="hidden" name="name" value="value" />
+    <a onclick="this.parentNode.submit(); return false;" style="
+            color: navy;
+            text-decoration: none;
+            border: 1px solid black;
+            padding: 1px 5px;
+            cursor: pointer
+        ">
+        Add to Shopping List
+    </a>
+</form>
 
 <p><img src="{{ item.photo_url }}" width="250px" height="250px"></p>
 
@@ -10,6 +22,9 @@
 <p><strong>Category:</strong> {{ item.category }}</p>
 
 <p><strong>Store:</strong> {{ item.store.title }}</p>
+{% if item.created_by %}
+<p>Created by: {{ item.created_by.username }}</p>
+{% endif %}
 
 
 <h2>Edit Item</h2>
@@ -29,7 +44,7 @@
             <li class="error">{{ error }}</li>
             {% endfor %}
         </ul>
-        
+
         {{ form.price.label }}
         {{ form.price }}
         <!-- Show form errors -->
@@ -38,7 +53,7 @@
             <li class="error">{{ error }}</li>
             {% endfor %}
         </ul>
-        
+
         {{ form.category.label }}
         {{ form.category }}
         <!-- Show form errors -->
